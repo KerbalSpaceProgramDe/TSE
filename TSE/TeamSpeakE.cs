@@ -6,6 +6,7 @@
 
 using System;
 using TeamSpeakE.Utility;
+using TeamSpeakE.Commands;
 using TS3QueryLib;
 
 namespace TeamSpeakE
@@ -21,27 +22,36 @@ namespace TeamSpeakE
                 // Logging starten
                 Logging.InitLogging();
 
+                // Exit-Methode registrieren
+                Console.CancelKeyPress += new ConsoleCancelEventHandler(OnConsoleExit);
+
                 // Kein Nutzen, nur ein Test
-                Console.Title = "TeamSpeak³-Bot | kerbal.de";
+                Console.Title = "TS³ Management Bot - " + Utility.Version.version;
                 Logging.LogSpecial("Hallo, ich bin ein TeamSpeak³-Bot.");
                 Logging.Log("Starte TS³-Verbindung...");
                 Logging.LogWarning("Kann TS³-Server nicht finden!");
                 Logging.LogError("Breche ab...");
 
-                // Solange kein exit Kommando erkannt wird, warten
-                while (Console.ReadLine() != "/exit") // <== Durch ein besseres System ersetzen!
+                // Den Prozess nicht hier beenden
+                while (true)
                 {
-                    continue;
+                    CommandHandler.CheckCommands();
                 }
-                
-                // Exit Kommando erkannt
-                Logging.LogSpecial("Bot schaltet sich ab!");
             }
             catch (Exception e)
             {
                 // Logge die Exception
                 Logging.LogException(e);
             }
+        }
+
+        private static void OnConsoleExit(object sender, ConsoleCancelEventArgs e)
+        {
+            // Stelle Farbe wieder her
+            Console.ForegroundColor = Logging.color;
+
+            // Schreibe Nachricht
+            Logging.LogSpecial("Bot schaltet sich ab!");
         }
     }
 }

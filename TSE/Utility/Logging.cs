@@ -14,52 +14,56 @@ namespace TeamSpeakE
         public class Logging
         {
             // Schriftfarbe in der Konsole
-            protected static ConsoleColor color;
+            public static ConsoleColor color;
 
             // Loggen der Uhrzeit
-            protected static string now => "[LOG " + DateTime.Now.ToLongTimeString() + "] ";
+            protected static string now => "[LOG " + DateTime.Now.ToLongTimeString() + "]: ";
 
             // Initializiere Logging
             public static void InitLogging()
             {
                 // Speichere Schriftfarbe
                 color = Console.ForegroundColor;
+
+                // Setze Schriftfarbe
+                Console.ForegroundColor = ConsoleColor.Gray;
+
+                // Logge Header
+                Log("TS³ Management Bot - " + Version.version);
             }
 
             // Einfaches Logging-Event
             public static void Log(object o)
             {
                 // Schreibe das Object in Weiß in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(now + o);
-                Console.ForegroundColor = color;
             }
 
             // Logging-Warnung
             public static void LogWarning(object o)
             {
                 // Schreibe das Object in Gelb in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine(now + o);
-                Console.ForegroundColor = color;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
 
             // Logging-Error
             public static void LogError(object o)
             {
                 // Schreibe das Object in Rot in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine(now + o);
-                Console.ForegroundColor = color;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
 
             // Spezielle Events
             public static void LogSpecial(object o)
             {
                 // Schreibe das Object in Grün in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine(now + o);
-                Console.ForegroundColor = color;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
 
             // Logging für C#-Exceptions
@@ -68,7 +72,7 @@ namespace TeamSpeakE
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
-                Console.ForegroundColor = color;
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
     }
