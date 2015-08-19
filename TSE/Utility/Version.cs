@@ -22,7 +22,7 @@ namespace TeamSpeakE
                     #if DEBUG
                     developmentBuild = true;
                     #endif
-                    return GetVersionNumber(versionNumber) + ((developmentBuild) ? " [Development Build]" : "");
+                    return GetVersionNumber(versionNumber) + ((developmentBuild) ? " [Entwicklungsversion]" : "");
                 }
             }
 
