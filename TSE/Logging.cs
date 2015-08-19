@@ -61,6 +61,15 @@ namespace TeamSpeakE
                 Console.WriteLine(now + o);
                 Console.ForegroundColor = color;
             }
+
+            // Logging für C#-Exceptions
+            public static void LogException(Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                Console.ForegroundColor = color;
+            }
         }
     }
 }
