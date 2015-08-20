@@ -25,7 +25,7 @@ namespace TeamSpeakE
                 Environment.Exit(0);
             }
 
-            [Command("help", "Zeigt eine Beschreibung der verfügbaren Befehle an.")]
+            [Command("help", "Beschreibung verfügbarer Befehle.", args = new[] { "-<command>" })]
             public static void Help(string[] args)
             {
                 // Wenn ein spezielles Kommando dargestellt werden soll..
@@ -34,7 +34,10 @@ namespace TeamSpeakE
                     // Stelle alle Command-Attribute dar
                     foreach (Command c in GetCommands().Where(c => args.Contains(c.name)))
                     {
-                        Logging.Log(c.name + ": " + c.description);
+                        string arguments = "";
+                        foreach (string s in c.args)
+                            arguments += "[" + s + "] ";
+                        Logging.Log(c.name + ": " + c.description + (arguments != "" ? " | " + arguments : ""));
                     }
                 }
                 else
@@ -42,7 +45,10 @@ namespace TeamSpeakE
                     // Stelle alle Command-Attribute dar
                     foreach (Command c in GetCommands())
                     {
-                        Logging.Log(c.name + ": " + c.description);
+                        string arguments = "";
+                        foreach (string s in c.args)
+                            arguments += "[" + s + "] ";
+                        Logging.Log(c.name + ": " + c.description + (arguments != "" ? " | " + arguments : ""));
                     }
                 }
             }
@@ -74,6 +80,9 @@ namespace TeamSpeakE
                 // Lese den aktuellen Befehl aus der Kommandozeile
                 string command = Console.ReadLine();
 
+                // Logging
+                Logging.Log("Kommando erkannt: " + command);
+
                 // Prüfe ob es ein Kommando ist
                 if (command.StartsWith("/"))
                 {
@@ -81,13 +90,12 @@ namespace TeamSpeakE
                     List<string> commands = command.Remove(0, 1).Split(' ').ToList();
 
                     // Versuche das Kommando zu finden
-                    Logging.Log(commands.First());
                     Command cmd = GetCommands().FirstOrDefault(c => c.name == commands.First());
 
                     // Wenn der Befehl falsch ist, abbrechen
                     if (cmd == null)
                     {
-                        Logging.LogError("Kommando nicht gefunden: " + commands.First());
+                        Logging.Log("Kommando nicht gefunden: " + commands.First());
                         return;
                     }
                     else
@@ -100,7 +108,7 @@ namespace TeamSpeakE
                 }
                 else
                 {
-                    Logging.LogError("Kommando ungültig: " + command);
+                    Logging.Log("Kommando ungültig: " + command);
                     return;
                 }
             }
@@ -111,6 +119,7 @@ namespace TeamSpeakE
         {
             public string name;
             public string description;
+            public string[] args = new string[0];
             public MethodInfo method;
 
             public Command (string name, string description)
