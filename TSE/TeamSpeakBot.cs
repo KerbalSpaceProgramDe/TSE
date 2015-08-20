@@ -14,6 +14,9 @@ namespace TeamSpeakBot
     // Einstiegspunkt für den TeamSpeak³ Bot
     public class TeamSpeakBot
     {
+        // Die Konfiguration des Bots
+        public static BotSettings settings;
+
         public static void Main(string[] args)
         {
             // Try - Catch erlaubt uns ein besseres Fehlermanagement, also nutzen wir das.
@@ -21,6 +24,9 @@ namespace TeamSpeakBot
             {
                 // Logging starten
                 Logging.InitLogging();
+
+                // Lade die Konfiguration
+                settings = SettingsParser<BotSettings>.Load();
 
                 // Exit-Methode registrieren
                 Console.CancelKeyPress += new ConsoleCancelEventHandler(OnConsoleExit);

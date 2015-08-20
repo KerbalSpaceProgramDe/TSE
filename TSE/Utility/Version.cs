@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+﻿/*==============================*\
+ *  TeamSpeak³ Management Bot   *
+ *   KCST - Thomas P. Kerman    *
+ * http://kerbalspaceprogram.de *
+\*==============================*/
 
 namespace TeamSpeakBot
 {
