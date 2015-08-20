@@ -24,7 +24,7 @@ namespace TeamSpeakBot
                 Environment.Exit(0);
             }
 
-            [Command("help", "Beschreibung verfügbarer Befehle.", args = new[] { "-<command>" })]
+            [Command("help", "Beschreibung verfügbarer Befehle.", args = new[] { "<command>" })]
             public static void Help(string[] args)
             {
                 // Wenn ein spezielles Kommando dargestellt werden soll..
