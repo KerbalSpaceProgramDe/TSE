@@ -9,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TeamSpeakE.Utility;
+using TeamSpeakBot.Utility;
 
-namespace TeamSpeakE
+namespace TeamSpeakBot
 {
     namespace Commands
     {
@@ -122,7 +122,7 @@ namespace TeamSpeakE
             public string[] args = new string[0];
             public MethodInfo method;
 
-            public Command (string name, string description)
+            public Command(string name, string description)
             {
                 this.name = name;
                 this.description = description;

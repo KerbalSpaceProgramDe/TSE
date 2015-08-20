@@ -6,7 +6,7 @@
 
 using System;
 
-namespace TeamSpeakE
+namespace TeamSpeakBot
 {
     namespace Utility
     {
@@ -18,6 +18,16 @@ namespace TeamSpeakE
 
             // Loggen der Uhrzeit
             protected static string now => "[LOG " + DateTime.Now.ToLongTimeString() + "]: ";
+
+            // Gestriges Datum
+            protected static string yesterday
+            {
+                get
+                {
+                    DateTime y = DateTime.Now.Subtract(TimeSpan.FromDays(1));
+                    return y.Year + "-" + y.Month + "-" + y.Day;
+                }
+            }
 
             // Initializiere Logging
             public static void InitLogging()

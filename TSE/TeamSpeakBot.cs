@@ -5,14 +5,14 @@
 \*==============================*/
 
 using System;
-using TeamSpeakE.Utility;
-using TeamSpeakE.Commands;
+using TeamSpeakBot.Utility;
+using TeamSpeakBot.Commands;
 using TS3QueryLib;
 
-namespace TeamSpeakE
+namespace TeamSpeakBot
 {
     // Einstiegspunkt für den TeamSpeak³ Bot
-    public class TeamSpeakE
+    public class TeamSpeakBot
     {
         public static void Main(string[] args)
         {
