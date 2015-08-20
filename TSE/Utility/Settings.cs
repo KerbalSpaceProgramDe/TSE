@@ -71,6 +71,20 @@ namespace TeamSpeakBot
         public class BotSettings
         {
             [JsonProperty]
+            public ConsoleColor colorNormal = ConsoleColor.Gray;
+            [JsonProperty]
+            public ConsoleColor colorSpecial = ConsoleColor.DarkGreen;
+            [JsonProperty]
+            public ConsoleColor colorWarning = ConsoleColor.DarkYellow;
+            [JsonProperty]
+            public ConsoleColor colorError = ConsoleColor.DarkRed;
+        }
+
+        // Verbindingskonfiguration
+        [JsonObject(Description = "Die Verbindung des TS³-Bots zum Server.")]
+        public class ConnectionSettings
+        {
+            [JsonProperty]
             public string adress = "127.0.0.1";
             [JsonProperty]
             public string port = "10000";

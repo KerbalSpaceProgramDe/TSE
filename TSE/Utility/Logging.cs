@@ -5,6 +5,7 @@
 \*==============================*/
 
 using System;
+using System.IO;
 
 namespace TeamSpeakBot
 {
@@ -19,70 +20,78 @@ namespace TeamSpeakBot
             // Loggen der Uhrzeit
             protected static string now => "[LOG " + DateTime.Now.ToLongTimeString() + "]: ";
 
-            // Gestriges Datum
-            protected static string yesterday
-            {
-                get
-                {
-                    DateTime y = DateTime.Now.Subtract(TimeSpan.FromDays(1));
-                    return y.Year + "-" + y.Month + "-" + y.Day;
-                }
-            }
+            // Logging-Stream
+            protected static StreamWriter logger;
 
             // Initializiere Logging
             public static void InitLogging()
             {
+                // Erstelle den Ordner
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/Logs/");
+
+                // Starte den Logger
+                logger = new StreamWriter(Directory.GetCurrentDirectory() + "/bot_log.txt", false);
+
                 // Speichere Schriftfarbe
                 color = Console.ForegroundColor;
 
                 // Setze Schriftfarbe
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
 
                 // Logge Header
                 Log("TS³ Management Bot - " + Version.version);
             }
 
+            // Wenn der Bot beendet wird, Logger schließen
+            public static void Close()
+            {
+                logger.Flush();
+                logger.Close();
+            }
+
             // Einfaches Logging-Event
             public static void Log(object o)
             {
-                // Schreibe das Object in Weiß in die Kommandozeile
+                // Schreibe das Object in Kommandozeile und Logger-Datei
                 Console.WriteLine(now + o);
+                logger.WriteLine(now + o);
+                logger.Flush();
             }
 
             // Logging-Warnung
             public static void LogWarning(object o)
             {
                 // Schreibe das Object in Gelb in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine(now + o);
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = TeamSpeakBot.settings.colorWarning;
+                Log(o);
+                Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
             }
 
             // Logging-Error
             public static void LogError(object o)
             {
                 // Schreibe das Object in Rot in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(now + o);
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = TeamSpeakBot.settings.colorError;
+                Log(o);
+                Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
             }
 
             // Spezielle Events
             public static void LogSpecial(object o)
             {
                 // Schreibe das Object in Grün in die Kommandozeile
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine(now + o);
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = TeamSpeakBot.settings.colorSpecial;
+                Log(o);
+                Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
             }
 
             // Logging für C#-Exceptions
             public static void LogException(Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-                Console.ForegroundColor = ConsoleColor.Gray;
+                Log(e.Message);
+                Log(e.StackTrace);
+                Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
             }
         }
     }

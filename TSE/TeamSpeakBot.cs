@@ -8,6 +8,7 @@ using System;
 using TeamSpeakBot.Utility;
 using TeamSpeakBot.Commands;
 using TS3QueryLib;
+using System.Diagnostics;
 
 namespace TeamSpeakBot
 {
@@ -16,20 +17,22 @@ namespace TeamSpeakBot
     {
         // Die Konfiguration des Bots
         public static BotSettings settings;
+        public static ConnectionSettings connection;
 
         public static void Main(string[] args)
         {
             // Try - Catch erlaubt uns ein besseres Fehlermanagement, also nutzen wir das.
-            try 
+            try
             {
+                // Lade die Konfiguration
+                settings = SettingsParser<BotSettings>.Load();
+                connection = SettingsParser<ConnectionSettings>.Load();
+
                 // Logging starten
                 Logging.InitLogging();
 
-                // Lade die Konfiguration
-                settings = SettingsParser<BotSettings>.Load();
-
                 // Exit-Methode registrieren
-                Console.CancelKeyPress += new ConsoleCancelEventHandler(OnConsoleExit);
+                AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnConsoleExit);
 
                 // Kein Nutzen, nur ein Test
                 Console.Title = "TS³ Management Bot - " + Utility.Version.version;
@@ -51,13 +54,14 @@ namespace TeamSpeakBot
             }
         }
 
-        private static void OnConsoleExit(object sender, ConsoleCancelEventArgs e)
+        private static void OnConsoleExit(object sender, EventArgs e)
         {
             // Stelle Farbe wieder her
             Console.ForegroundColor = Logging.color;
 
             // Schreibe Nachricht
             Logging.LogSpecial("Bot schaltet sich ab!");
+            Logging.Close();
         }
     }
 }
