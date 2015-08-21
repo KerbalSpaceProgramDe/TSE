@@ -42,8 +42,8 @@ namespace TeamSpeakBot
                 // Exit-Methode registrieren
                 AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnConsoleExit);
 
-                // Kein Nutzen, nur ein Test
-                Console.Title = "TS³ Management Bot - " + Utility.Version.version;
+                // Log
+                Console.Title = "TS³ Management Bot - " + Utility.Version.GetVersion();
                 Logging.LogSpecial("Hallo, ich bin ein TeamSpeak³-Bot.");
 
                 // Verbindung zum Server herstellen

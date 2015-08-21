@@ -36,7 +36,7 @@ namespace TeamSpeakBot
                 Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
 
                 // Logge Header
-                LogSpecial("TS³ Management Bot - " + Version.version);
+                LogSpecial("TS³ Management Bot - " + Version.GetVersion());
             }
 
             // Wenn der Bot beendet wird, Logger schließen
