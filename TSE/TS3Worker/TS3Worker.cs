@@ -84,7 +84,7 @@ namespace TeamSpeakBot
             private void OnReadyToSendCommands(object sender, EventArgs e)
             {
                 // Logging
-                Logging.Log("Verbindung erfolgreich. Starte Autentifizierung...");
+                Logging.Log("Verbindung erfolgreich. Starte Authentifizierung...");
 
                 // Login
                 query = new QueryRunner(tcpSocket);
@@ -92,7 +92,7 @@ namespace TeamSpeakBot
                 query.SelectVirtualServerByPort(serverPort);
 
                 // Mehr Logging
-                Logging.Log("Autentifizierung erfolgreich. Starte Bot-Logik.");
+                Logging.Log("Authentifizierung erfolgreich. Starte Bot-Logik.");
 
                 // Status
                 connected = true;
