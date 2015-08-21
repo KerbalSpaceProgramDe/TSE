@@ -12,7 +12,6 @@ using TS3QueryLib.Core.Common;
 using TS3QueryLib.Core.Common.Responses;
 using TS3QueryLib.Core.Communication;
 using TS3QueryLib.Core.Server;
-using TS3QueryLib.Core.Server.Responses;
 
 namespace TeamSpeakBot
 {
@@ -62,6 +61,9 @@ namespace TeamSpeakBot
                 SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
                 tcpSocket = new AsyncTcpDispatcher(host, queryPort);
                 tcpSocket.ReadyForSendingCommands += OnReadyToSendCommands;
+                tcpSocket.BanDetected += OnBanDetected;
+                tcpSocket.NotificationReceived += OnNotificationReceived;
+                tcpSocket.ServerClosedConnection += OnServerClosedConnection;
                 tcpSocket.Connect();
             }
 
@@ -96,6 +98,31 @@ namespace TeamSpeakBot
 
                 // Status
                 connected = true;
+            }
+
+            // Ban erkannt
+            private void OnBanDetected(object sender, EventArgs<SimpleResponse> e)
+            {
+                // Logging
+                Logging.LogWarning("Query-Account wurde gesperrt!");
+                Logging.LogWarning("Grund: " + e.Value.StatusText);
+
+                // Verbindung
+                CloseConnection();
+            }
+
+            // Nachricht erhalten
+            private void OnNotificationReceived(object sender, EventArgs<string> e)
+            {
+                // Logging
+                Logging.LogSpecial("Nachricht empfangen: " + e.Value);
+            }
+
+            // Server schließt Verbindung
+            private void OnServerClosedConnection(object sender, EventArgs e)
+            {
+                // Status
+                connected = false;
             }
         }
     }
