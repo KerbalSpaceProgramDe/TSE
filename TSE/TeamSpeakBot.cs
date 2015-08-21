@@ -7,8 +7,7 @@
 using System;
 using TeamSpeakBot.Utility;
 using TeamSpeakBot.Commands;
-using TS3QueryLib;
-using System.Diagnostics;
+using TeamSpeakBot.ConnectionWorker;
 
 namespace TeamSpeakBot
 {
@@ -18,6 +17,7 @@ namespace TeamSpeakBot
         // Die Konfiguration des Bots
         public static BotSettings settings;
         public static ConnectionSettings connection;
+        public static TS3Worker worker;
 
         public static void Main(string[] args)
         {
@@ -37,9 +37,10 @@ namespace TeamSpeakBot
                 // Kein Nutzen, nur ein Test
                 Console.Title = "TS³ Management Bot - " + Utility.Version.version;
                 Logging.LogSpecial("Hallo, ich bin ein TeamSpeak³-Bot.");
-                Logging.Log("Starte TS³-Verbindung...");
-                Logging.LogWarning("Kann TS³-Server nicht finden!");
-                Logging.LogError("Breche ab...");
+
+                // Verbindung zum Server herstellen
+                worker = TS3Worker.CreateWorker(connection);
+                worker.OpenConnection();
 
                 // Den Prozess nicht hier beenden
                 while (true)

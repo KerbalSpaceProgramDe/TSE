@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using TeamSpeakBot.ConnectionWorker;
 using TeamSpeakBot.Utility;
 
 namespace TeamSpeakBot
@@ -20,8 +21,51 @@ namespace TeamSpeakBot
             [Command("exit", "Stoppt den TS³-Bot.")]
             public static void Exit(string[] args)
             {
+                // Stoppe die Verbindungen
+                TS3Worker.fetch.CloseConnection();
+
                 // Sch(!)ieße die Anwendung ;D
                 Environment.Exit(0);
+            }
+
+            [Command("disconnect", "Trennt die Verbindung zum Server")]
+            public static void Disconnect(string[] args)
+            {
+                // Prüfe ob eine Verbindung vorhanden ist
+                if (TS3Worker.fetch.connected)
+                {
+                    TS3Worker.fetch.CloseConnection();
+                }
+                else
+                {
+                    Logging.LogWarning("Keine aktive Serververbindung gefunden!");
+                }
+            }
+
+            [Command("connect", "Stellt eine Verbindung zu einem Server her", args = new[] { "host", "queryPort", "serverPort", "name", "pw" })]
+            public static void Connect(string[] args)
+            {
+                // Wenn eine spezielle Verbindung angegeben wird
+                if (args.Length == 5)
+                {
+                    ConnectionSettings connection = new ConnectionSettings()
+                    {
+                        host = args[0],
+                        queryPort = ushort.Parse(args[1]),
+                        serverPort = ushort.Parse(args[2]),
+                        username = args[3],
+                        password = args[4]
+                    };
+                    TS3Worker.CreateWorker(connection).OpenConnection();
+                }
+                else if (args.Length == 1 && args[0] == "default")
+                {
+                    TS3Worker.CreateWorker(TeamSpeakBot.connection).OpenConnection();
+                }
+                else
+                {
+                    TS3Worker.fetch.OpenConnection();
+                }
             }
 
             [Command("help", "Beschreibung verfügbarer Befehle.", args = new[] { "<command>" })]

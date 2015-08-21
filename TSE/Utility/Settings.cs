@@ -6,10 +6,7 @@
 
 using Newtonsoft.Json;
 using System;
-using System.ComponentModel;
 using System.IO;
-using System.Reflection;
-using System.Text;
 
 namespace TeamSpeakBot
 {
@@ -85,9 +82,15 @@ namespace TeamSpeakBot
         public class ConnectionSettings
         {
             [JsonProperty]
-            public string adress = "127.0.0.1";
+            public string host = "127.0.0.1";
             [JsonProperty]
-            public string port = "10000";
+            public ushort queryPort = 10011;
+            [JsonProperty]
+            public ushort serverPort = 9987;
+            [JsonProperty]
+            public string username = "serveradmin";
+            [JsonProperty]
+            public string password = "";
         }
     }
 }

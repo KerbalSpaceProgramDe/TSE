@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Comands.cs" />
+    <Compile Include="TS3Worker\TS3Worker.cs" />
     <Compile Include="Utility\Logging.cs" />
     <Compile Include="TeamSpeakBot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

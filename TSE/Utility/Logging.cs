@@ -26,9 +26,6 @@ namespace TeamSpeakBot
             // Initializiere Logging
             public static void InitLogging()
             {
-                // Erstelle den Ordner
-                Directory.CreateDirectory(Directory.GetCurrentDirectory() + "/Logs/");
-
                 // Starte den Logger
                 logger = new StreamWriter(Directory.GetCurrentDirectory() + "/bot_log.txt", false);
 
@@ -39,7 +36,7 @@ namespace TeamSpeakBot
                 Console.ForegroundColor = TeamSpeakBot.settings.colorNormal;
 
                 // Logge Header
-                Log("TS³ Management Bot - " + Version.version);
+                LogSpecial("TS³ Management Bot - " + Version.version);
             }
 
             // Wenn der Bot beendet wird, Logger schließen
