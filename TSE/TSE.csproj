@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Comands.cs" />
+    <Compile Include="TS3Worker\BotLogic\ExampleBotLogic.cs" />
+    <Compile Include="TS3Worker\IBotLogic.cs" />
     <Compile Include="TS3Worker\TS3Worker.cs" />
     <Compile Include="Utility\Logging.cs" />
     <Compile Include="TeamSpeakBot.cs" />

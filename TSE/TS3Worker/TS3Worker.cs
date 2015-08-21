@@ -5,7 +5,10 @@
 \*==============================*/
 
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
+using System.Linq;
 using TeamSpeakBot.Utility;
 using TS3QueryLib.Core;
 using TS3QueryLib.Core.Common;
@@ -37,6 +40,9 @@ namespace TeamSpeakBot
             // Status
             public bool connected { get; protected set; }
 
+            // Bot Logic
+            public List<IBotLogic> botLogic { get; protected set; }
+
             // Erstelle eine neue Instanz den Workers
             public static TS3Worker CreateWorker(ConnectionSettings connection)
             {
@@ -46,7 +52,9 @@ namespace TeamSpeakBot
                     queryPort = connection.queryPort,
                     serverPort = connection.serverPort,
                     password = connection.password,
-                    username = connection.username
+                    username = connection.username,
+                    botLogic = new List<IBotLogic>()
+                    
                 };
                 return fetch;
             }
@@ -94,7 +102,25 @@ namespace TeamSpeakBot
                 query.SelectVirtualServerByPort(serverPort);
 
                 // Mehr Logging
-                Logging.Log("Authentifizierung erfolgreich. Starte Bot-Logik.");
+                Logging.Log("Authentifizierung erfolgreich. Starte Bot-Logik...");
+
+                // Bot Logik
+                Type[] types = Assembly.GetAssembly(GetType()).GetTypes().Where(t => t.GetInterface("IBotLogic") != null).ToArray();
+                foreach (Type bot in types)
+                {
+                    Logging.Log("Starte " + bot.Name + "...");
+                    try
+                    {
+                        IBotLogic logic = Activator.CreateInstance(bot) as IBotLogic;
+                        fetch.botLogic.Add(logic);
+                        Logging.LogSpecial(bot.Name + " gestartet.");
+                    }
+                    catch (Exception e2)
+                    {
+                        Logging.LogWarning("Kann " + bot.Name + " nicht starten!");
+                        Logging.LogException(e2);
+                    }
+                }
 
                 // Status
                 connected = true;
@@ -123,6 +149,22 @@ namespace TeamSpeakBot
             {
                 // Status
                 connected = false;
+            }
+
+            // Bot-Logic Check
+            public static void CheckLogic()
+            {
+                while (TeamSpeakBot.isRunning)
+                {
+                    // Das zickt rum, also betreiben wir die "Thomas Feuerwehr" Methode und unterdrücken den Fehler :P
+                    // Ehrlich: Der Fehler ist nicht schlimm, man kann aber auch nichts gegen machen ^^
+                    try
+                    {
+                        foreach (IBotLogic bot in fetch.botLogic)
+                            bot.CheckLogic();
+                    }
+                    catch { }
+                }
             }
         }
     }

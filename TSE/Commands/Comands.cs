@@ -120,39 +120,42 @@ namespace TeamSpeakBot
             // Prüft die Kommandozeile auf Kommandos
             public static void CheckCommands()
             {
-                // Lese den aktuellen Befehl aus der Kommandozeile
-                string command = Console.ReadLine();
-
-                // Logging
-                Logging.Log("Kommando erkannt: " + command);
-
-                // Prüfe ob es ein Kommando ist
-                if (command.StartsWith("/"))
+                while (TeamSpeakBot.isRunning)
                 {
-                    // Formatierung
-                    List<string> commands = command.Remove(0, 1).Split(' ').ToList();
+                    // Lese den aktuellen Befehl aus der Kommandozeile
+                    string command = Console.ReadLine();
 
-                    // Versuche das Kommando zu finden
-                    Command cmd = GetCommands().FirstOrDefault(c => c.name == commands.First());
+                    // Logging
+                    Logging.Log("Kommando erkannt: " + command);
 
-                    // Wenn der Befehl falsch ist, abbrechen
-                    if (cmd == null)
+                    // Prüfe ob es ein Kommando ist
+                    if (command.StartsWith("/"))
                     {
-                        Logging.Log("Kommando nicht gefunden: " + commands.First());
-                        return;
+                        // Formatierung
+                        List<string> commands = command.Remove(0, 1).Split(' ').ToList();
+
+                        // Versuche das Kommando zu finden
+                        Command cmd = GetCommands().FirstOrDefault(c => c.name == commands.First());
+
+                        // Wenn der Befehl falsch ist, abbrechen
+                        if (cmd == null)
+                        {
+                            Logging.Log("Kommando nicht gefunden: " + commands.First());
+                            return;
+                        }
+                        else
+                        {
+                            // Führe die gespeicherte Methode aus
+                            MethodInfo method = cmd.method;
+                            commands.RemoveAt(0);
+                            method.Invoke(null, new[] { commands.ToArray() });
+                        }
                     }
                     else
                     {
-                        // Führe die gespeicherte Methode aus
-                        MethodInfo method = cmd.method;
-                        commands.RemoveAt(0);
-                        method.Invoke(null, new[] { commands.ToArray() });
+                        Logging.Log("Kommando ungültig: " + command);
+                        return;
                     }
-                }
-                else
-                {
-                    Logging.Log("Kommando ungültig: " + command);
-                    return;
                 }
             }
         }   

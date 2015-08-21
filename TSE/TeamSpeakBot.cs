@@ -8,6 +8,7 @@ using System;
 using TeamSpeakBot.Utility;
 using TeamSpeakBot.Commands;
 using TeamSpeakBot.ConnectionWorker;
+using System.Threading;
 
 namespace TeamSpeakBot
 {
@@ -18,6 +19,13 @@ namespace TeamSpeakBot
         public static BotSettings settings;
         public static ConnectionSettings connection;
         public static TS3Worker worker;
+
+        // Threads
+        public static Thread cmdThread;
+        public static Thread botThread;
+
+        // Status
+        public static bool isRunning { get; protected set; }
 
         public static void Main(string[] args)
         {
@@ -42,11 +50,19 @@ namespace TeamSpeakBot
                 worker = TS3Worker.CreateWorker(connection);
                 worker.OpenConnection();
 
+                // Status
+                isRunning = true;
+
+                // Kommandos
+                cmdThread = new Thread(CommandHandler.CheckCommands);
+                cmdThread.Start();
+
+                // BotLogic
+                botThread = new Thread(TS3Worker.CheckLogic);
+                botThread.Start();
+
                 // Den Prozess nicht hier beenden
-                while (true)
-                {
-                    CommandHandler.CheckCommands();
-                }
+                while (true) { continue; }
             }
             catch (Exception e)
             {
@@ -63,6 +79,9 @@ namespace TeamSpeakBot
             // Schreibe Nachricht
             Logging.LogSpecial("Bot schaltet sich ab!");
             Logging.Close();
+
+            // Status
+            isRunning = false;
         }
     }
 }
