@@ -100,7 +100,7 @@ namespace TeamSpeakBot
             public static Command[] GetCommands()
             {
                 // Finde alle Methoden
-                MethodInfo[] infos = Assembly.GetAssembly(typeof(Command)).GetTypes().SelectMany(t => t.GetMethods());
+                MethodInfo[] infos = Assembly.GetAssembly(typeof(Command)).GetTypes().SelectMany(t => t.GetMethods()).ToArray();
                 List<Command> commands = new List<Command>();
 
                 // Finde dir Command-Attribute

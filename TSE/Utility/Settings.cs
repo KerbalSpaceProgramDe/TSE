@@ -75,6 +75,8 @@ namespace TeamSpeakBot
             public ConsoleColor colorWarning = ConsoleColor.DarkYellow;
             [JsonProperty]
             public ConsoleColor colorError = ConsoleColor.DarkRed;
+            [JsonProperty]
+            public string name = "TeamSpeak Bot";
         }
 
         // Verbindingskonfiguration

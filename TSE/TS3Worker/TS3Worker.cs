@@ -15,6 +15,7 @@ using TS3QueryLib.Core.Common;
 using TS3QueryLib.Core.Common.Responses;
 using TS3QueryLib.Core.Communication;
 using TS3QueryLib.Core.Server;
+using TS3QueryLib.Core.Server.Entities;
 
 namespace TeamSpeakBot
 {
@@ -100,7 +101,8 @@ namespace TeamSpeakBot
                 query = new QueryRunner(tcpSocket);
                 query.Login(username, password);
                 query.SelectVirtualServerByPort(serverPort);
-
+                query.UpdateCurrentQueryClient(new ClientModification() { Nickname = TeamSpeakBot.settings.name } );
+                        
                 // Mehr Logging
                 Logging.Log("Authentifizierung erfolgreich. Starte Bot-Logik...");
 
