@@ -1,12 +1,12 @@
 # ----------------
-# TeamSpeak³ - Bot
+# TeamSpeakÂ³ - Bot
 # Thomas P. - KCST
 # www.kerbal.de
 # encoding: utf-8
 # ----------------
 
 # Import
-import logging, colorer, settings
+import logging, colorer, settings #Hier ist logging noch dass was es ist, nirgendwo sonst! Warum? Wen juckts :D
 from encodings import utf_8
 from datetime import datetime
 
