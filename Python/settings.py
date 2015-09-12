@@ -15,10 +15,10 @@ adress = "localhost"
 query = 10011
 
 # Username für den Query-Login
-username = "Qboid"
+username = "serveradmin"
 
 # Passwort für den Query-Login
-password = "Z+dtuoLB"
+password = ""
 
 # Name des Logfiles
 logfile = "bot_log.txt"
