@@ -23,11 +23,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="*.py" />
-    <Compile Include="PyTS3/*.py" />
+    <Compile Include="ts3/*.py" />
+	<Compile Include="blinker/*.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="blinker\" />
-    <Folder Include="PyTS3\" />
+    <Folder Include="ts3\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
