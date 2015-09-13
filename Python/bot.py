@@ -6,7 +6,7 @@
 # ----------------
 
 # Import
-import logger as logging, settings, colorer, PyTS3, globals, time
+import logger as logging, settings, colorer, ts3, globals, time
 
 # Hallo sagen
 logging.debug("Hallo, ich bin ein TeamSpeak³-Bot.")
@@ -16,9 +16,9 @@ globals.isRunning = True
 
 # Zum TS3 Server Verbinden
 logging.info("Baue Verbindung zu " + settings.adress + ":" + str(settings.query) + " auf...")
-ts3 = None;
+ts3conn = None;
 try:
-    ts3 = PyTS3.query.TS3Connection(settings.adress, settings.query)
+    ts3conn = ts3.query.TS3Connection(settings.adress, settings.query)
 except:
     logging.error("Verbindung fehlgeschlagen!")
     exit()
@@ -27,7 +27,7 @@ logging.debug("Verbindung erfolgreich!")
 # Einloggen
 logging.info("Starte Authentifizierung...")
 try:
-    ts3.login(client_login_name=settings.username, client_login_password=settings.password)
+    ts3conn.login(client_login_name=settings.username, client_login_password=settings.password)
 except:
     logging.error("Authentifizierung fehlgeschlagen!")
     exit()
