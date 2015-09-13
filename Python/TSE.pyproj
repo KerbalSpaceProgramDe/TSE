@@ -26,6 +26,7 @@
     <Compile Include="PyTS3/*.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="blinker\" />
     <Folder Include="PyTS3\" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,5 +1,5 @@
-# ----------------
-# TeamSpeak� - Bot
+﻿# ----------------
+# TeamSpeak³ - Bot
 # Thomas P. - KCST
 # www.kerbal.de
 # encoding: utf-8

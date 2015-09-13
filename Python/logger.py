@@ -1,4 +1,4 @@
-# ----------------
+﻿# ----------------
 # TeamSpeak³ - Bot
 # Thomas P. - KCST
 # www.kerbal.de
