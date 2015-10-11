@@ -6,7 +6,7 @@
 # ----------------
 
 # Import
-import logger as logging, settings, colorer, ts3, globals, time
+import logger as logging, settings, colorer, ts3, globals, time, logic
 
 # Hallo sagen
 logging.debug("Hallo, ich bin ein TeamSpeak³-Bot.")
@@ -16,7 +16,7 @@ globals.isRunning = True
 
 # Zum TS3 Server Verbinden
 logging.info("Baue Verbindung zu " + settings.adress + ":" + str(settings.query) + " auf...")
-ts3conn = None;
+ts3conn = None
 try:
     ts3conn = ts3.query.TS3Connection(settings.adress, settings.query)
 except:
@@ -32,12 +32,17 @@ except:
     logging.error("Authentifizierung fehlgeschlagen!")
     exit()
 logging.debug("Authentifizierung erfolgreich!")
+ts3conn.use(sid = 1, port = 9987)
 
 # Nicht ausgehen
-while (globals.isRunning):
-    # Hier Bot-Logik implementieren!
-    # Eventuell Kommando-System?
-    time.sleep(0.1)
-    continue
+try:
+    while (globals.isRunning):
+        # Bot Logik aufrufen
+        logic.Run(ts3conn)
 
-# Alles ausschalten etc.
+        # Eventuell Kommando-System?
+        time.sleep(0.1)
+        continue
+except KeyboardInterrupt:
+    logging.debug("Bot-Programm unterbrochen!")
+    exit()

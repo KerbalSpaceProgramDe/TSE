@@ -9,16 +9,16 @@
 name = "TeamSpeak Bot"
 
 # Adresse des Servers
-adress = "localhost"
+adress = "thomasonline.ga"
 
 # Query-Port des Servers
 query = 10011
 
 # Username für den Query-Login
-username = "serveradmin"
+username = "Qboid"
 
 # Passwort für den Query-Login
-password = ""
+password = "fcGHbA1k"
 
 # Name des Logfiles
 logfile = "bot_log.txt"

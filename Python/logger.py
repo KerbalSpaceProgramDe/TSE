@@ -23,19 +23,19 @@ def info(msg):
 # Warning
 def warning(msg):
     msg = "[" + time() + "] " + msg
-    logging.warning("[" + time() + "] " + msg)
+    logging.warning(msg)
     toFile(msg)
 
 # Error
 def error(msg):
     msg = "[" + time() + "] " + msg
-    logging.error("[" + time() + "] " + msg)
+    logging.error(msg)
     toFile(msg)
 
 # Debug
 def debug(msg):
     msg = "[" + time() + "] " + msg
-    logging.debug("[" + time() + "] " + msg)
+    logging.debug(msg)
     toFile(msg)
 
 # Time
