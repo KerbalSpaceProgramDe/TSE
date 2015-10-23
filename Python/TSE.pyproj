@@ -25,12 +25,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="*.py" />
-    <Compile Include="ts3/*.py" />
-    <Compile Include="blinker/*.py" />
+    <Compile Include="blinker/base.py" />
+    <Compile Include="blinker/_saferef.py" />
+    <Compile Include="blinker/_utilities.py" />
+    <Compile Include="blinker/__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="blinker\" />
-    <Folder Include="ts3\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />

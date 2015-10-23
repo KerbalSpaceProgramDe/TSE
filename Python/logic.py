@@ -21,7 +21,7 @@ def logic(function):
 # Variablen
 tilLastPoke = 0
 
-@logic # Test-Implementation des Logik Systems - Stupst mich (Thomas) alle 120 frames an :D
+@logic # Test-Implementation des Logik Systems - Stupst mich (Thomas) alle 120 frames an :D - Killt den Bot wenn ich nicht auf dem Server bin *pfeif*
 def Poke(ts3conn):
     global tilLastPoke
     if tilLastPoke == 0:
