@@ -1,48 +1,70 @@
-﻿# ----------------
-# TeamSpeak³ - Bot
-# Thomas P. - KCST
-# www.kerbal.de
-# encoding: utf-8
-# ----------------
+﻿# ---------------------
+#   TeamSpeak-3 Bot
+# kerbalspaceprogram.de
+#  Thomas P. und KCST
+# ---------------------
 
-# Import
-import logging, colorer, settings #Hier ist logging noch dass was es ist, nirgendwo sonst! Warum? Wen juckts :D
-from encodings import utf_8
-from datetime import datetime
+# Imports
+import datetime
+import shutil
+import enum
+import os
 
-# Init
-logging.basicConfig(format='%(message)s', level=logging.DEBUG)
-file = open(settings.logfile, "w", -1, "utf_8", None, "\n", True, None)
+# Constants
+loggingDirectory = 'logs/'
+lastLoggedDay = int(datetime.datetime.strftime(datetime.datetime.utcnow(), '%d'))
 
-# Info
-def info(msg):
-    msg = "[" + time() + "] " + msg
-    logging.info(msg)
-    toFile(msg)
+# --
+# Logging Module to log messages to file and CLI
+# --
 
-# Warning
-def warning(msg):
-    msg = "[" + time() + "] " + msg
-    logging.warning(msg)
-    toFile(msg)
+# Check the directory
+if not os.path.exists(loggingDirectory):
+    os.makedirs(loggingDirectory, 777, True)
 
-# Error
-def error(msg):
-    msg = "[" + time() + "] " + msg
-    logging.error(msg)
-    toFile(msg)
+# Open the log
+file = open(loggingDirectory + 'latest.log', 'a+', -1, 'utf-8', None, '\n', )
 
-# Debug
-def debug(msg):
-    msg = "[" + time() + "] " + msg
-    logging.debug(msg)
-    toFile(msg)
+# Logging
+def log(messsage, level : str):
+    
+    # Globals
+    global lastLoggedDay
 
-# Time
-def time():
-    return datetime.strftime(datetime.now(), "%H:%M:%S")
+    # Check for new day
+    if datetime.datetime.day == lastLoggedDay + 1:
+        newDay()
 
-# Log-to-File
-def toFile(msg):
-    file.writelines(msg + "\n")
-    file.flush()    
+    # Log
+    file.writelines('[' + str(level) + ' ' + datetime.datetime.strftime(datetime.datetime.utcnow(), "%H:%M:%S") + ']: ' + messsage + '\n')
+    print('[' + str(level) + ' ' + datetime.datetime.strftime(datetime.datetime.utcnow(), "%H:%M:%S") + ']: ' + messsage)
+
+    # Set lastLoggedDay
+    lastLoggedDay = int(datetime.datetime.strftime(datetime.datetime.utcnow(), '%d'))
+
+# Moves the current file to a different name and creates a new one
+def newDay():
+    
+    # Globals
+    global file
+
+    # Get the new filename
+    name = datetime.datetime.strftime(datetime.datetime.utcnow(), '%Y-%m') + '-' + lastLoggedDay + '.log';
+
+    # Close the old file
+    file.close()
+
+    # Move it away
+    shutil.move(loggingDirectory + 'latest.log', name)
+
+    # Open a new file
+    file = open(loggingDirectory + 'latest.log', 'a+', -1, 'utf-8', None, '\n')
+
+# Class to store logging levels
+class level:
+    DEBUG = 'DEBUG'
+    INFO = 'INFO'
+    WARNING = 'WARNING'
+    ERROR = 'ERROR'
+    SPECIAL = 'SPECIAL'
+    VERYSPECIAL = 'VERYSPECIAL'

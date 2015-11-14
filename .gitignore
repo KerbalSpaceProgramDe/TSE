@@ -38,6 +38,8 @@ local.properties
 
 # User-specific files
 *.suo
+*/.vs/*
+*/.suo
 *.user
 *.sln.docstates
 
@@ -218,4 +220,5 @@ bot_log.txt
 
 #Mr Developer
 .mr.developer.cfg
+*.suo
 *.suo

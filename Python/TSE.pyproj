@@ -24,14 +24,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="*.py" />
-    <Compile Include="blinker/base.py" />
-    <Compile Include="blinker/_saferef.py" />
-    <Compile Include="blinker/_utilities.py" />
-    <Compile Include="blinker/__init__.py" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="blinker\" />
+    <Compile Include="bot.py" />
+    <Compile Include="internal.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="logger.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\3.4" />
