@@ -41,8 +41,12 @@ connection = json.load(open(settingsDirectory + connSettingsName, 'r', -1, 'utf-
 # Say hello
 logger.log('TeamSpeak-E - A TeamSpeak Management Bot by kerbal.de', logger.level.SPECIAL)
 
+# TS3 Connection
+ts = None
+
 # Use a function for this so that we can reconnect
 def Connect():
+    global ts
     try:
         # Create the connection to the Server
         logger.log('Connecting to ' + connection['host'] + ':' + str(connection['port']) + '. Pending...', logger.level.INFO)
