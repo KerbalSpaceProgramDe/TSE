@@ -68,6 +68,9 @@ def Connect():
     except ts3.query.TS3Error as error:
         logger.log('TS3Error! Exception: ' + str(error), logger.level.ERROR)
         return
+    except ts3.query.TS3QueryError as queryError:
+        logger.log('TS3QueryError! Exception: ' + str(queryError), logger.level.ERROR)
+        return
 
 # Connect
 Connect()
